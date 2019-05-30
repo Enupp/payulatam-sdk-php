@@ -1,12 +1,11 @@
 <?php
 
-namespace PayU;
+namespace PayU\Api;
 
 use PayU\Api\SupportedLanguages;
 use PayU\Api\PayUKeyMapName;
 use PayU\Api\PayUCommands;
 use PayU\Api\PayUTransactionResponseCode;
-use PayU\Api\PayUHttpRequestInfo;
 use PayU\Api\PayUResponseCode;
 use PayU\Api\PayuPaymentMethodType;
 use PayU\Api\PaymentMethods;
@@ -42,60 +41,63 @@ use PayU\PayUSubscriptionPlans;
 use PayU\PayUCreditCards;
 use PayU\PayURecurringBill;
 use PayU\PayURecurringBillItem;
+use PayU\PayU;
 
 
 /**
+ * This class helps to build the request api info 
  *
- * Holds basic request information
- * 
  * @author PayU Latam
  * @since 1.0.0
- * @version 1.0.0, 20/10/2013
+ * @version 1.0.0, 29/10/2013
  *
  */
-abstract class PayU {
+class PayUHttpRequestInfo{
+	
+	/** the http method to the request */
+	var $method;
+	
+	/** the environment to the request*/
+	var $environment;
+	
+	/** the segment to add the url to the request*/
+	var $segment;
+	
+	/** the user for Basic Http authentication */
+	var $user;
+	
+	/** the password for Basic Http authentication */
+	var $password;
+	
+	/** the language to be include in the header request */
+	var $lang;
+	
+	
 	
 	/**
-	 * Api version
+	 * 
+	 * @param string $environment
+	 * @param string $method
+	 * @param string $segment
 	 */
-	const  API_VERSION = "4.0.1";
-
-	/**
-	 * Api name
-	 */
-	const  API_NAME = "PayU SDK";
+	function __construct($environment, $method, $segment = null) {
+		$this->environment = $environment;
+		$this->method = $method;
+		$this->segment = $segment;
+	}
 	
 	
-	const API_CODE_NAME = "PAYU_SDK";
-
 	/**
-	 * The method invocation is for testing purposes
+	 * Builds the url for the environment selected
 	 */
-	public static $isTest = false;
-
-	/**
-	 * The merchant API key
-	 */
-	public static  $apiKey = null;
-
-	/**
-	 * The merchant API Login
-	 */
-	public static  $apiLogin = null;
-
-	/**
-	 * The merchant Id
-	 */
-	public static  $merchantId = null;
-
-	/**
-	 * The request language
-	 */
-	public static $language = SupportedLanguages::ES;
+	public function getUrl(){
+		if(isset($this->segment)){
+			return Environment::getApiUrl($this->environment) . $this->segment;
+		}else{
+			return Environment::getApiUrl($this->environment);
+		}
+	}
 	
-
+	
+	
 }
-
-
-/** validates Environment before begin any operation */
-Environment::validate();

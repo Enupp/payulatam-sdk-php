@@ -1,6 +1,6 @@
 <?php
 
-namespace PayU;
+namespace PayU\Api;
 
 use PayU\Api\SupportedLanguages;
 use PayU\Api\PayUKeyMapName;
@@ -10,7 +10,6 @@ use PayU\Api\PayUHttpRequestInfo;
 use PayU\Api\PayUResponseCode;
 use PayU\Api\PayuPaymentMethodType;
 use PayU\Api\PaymentMethods;
-use PayU\Api\PayUCountries;
 use PayU\Exceptions\PayUErrorCodes;
 use PayU\Exceptions\PayUException;
 use PayU\Exceptions\ConnectionException;
@@ -42,60 +41,54 @@ use PayU\PayUSubscriptionPlans;
 use PayU\PayUCreditCards;
 use PayU\PayURecurringBill;
 use PayU\PayURecurringBillItem;
+use PayU\PayU;
 
 
 /**
+ * Class contains payments countries in the PayU SDK. Sometimes when a payment
+ * method is processed by several countries is necessary to specify the country
+ * due currency issues.
  *
- * Holds basic request information
- * 
  * @author PayU Latam
  * @since 1.0.0
- * @version 1.0.0, 20/10/2013
- *
+ * @version 1.0.0,, 29/10/2013
  */
-abstract class PayU {
+class PayUCountries{
+
+	/**
+	 * When the payment country is Argentina.
+	 */
+	const AR = 'AR';
+	/**
+	 * When the payment country is Brazil.
+	 */
+	const BR = 'BR';
+	/**
+	 * When the payment country is Chile.
+	 */
+	const CL = 'CL';
+	/**
+	 * When the payment country is Colombia.
+	 */
+	const CO = 'CO';
+	/**
+	 * When the payment country is Mexico.
+	 */
+	const MX = 'MX';
 	
 	/**
-	 * Api version
+	 * When the payment country is Panama.
 	 */
-	const  API_VERSION = "4.0.1";
-
+	const PA = 'PA';
 	/**
-	 * Api name
+	 * When the payment country is Peru.
 	 */
-	const  API_NAME = "PayU SDK";
+	const PE = 'PE';
 	
-	
-	const API_CODE_NAME = "PAYU_SDK";
-
 	/**
-	 * The method invocation is for testing purposes
+	 * When the payment country is United States.
 	 */
-	public static $isTest = false;
-
-	/**
-	 * The merchant API key
-	 */
-	public static  $apiKey = null;
-
-	/**
-	 * The merchant API Login
-	 */
-	public static  $apiLogin = null;
-
-	/**
-	 * The merchant Id
-	 */
-	public static  $merchantId = null;
-
-	/**
-	 * The request language
-	 */
-	public static $language = SupportedLanguages::ES;
+	const US = 'US';
 	
 
 }
-
-
-/** validates Environment before begin any operation */
-Environment::validate();

@@ -1,6 +1,6 @@
 <?php
 
-namespace PayU;
+namespace PayU\Exceptions;
 
 use PayU\Api\SupportedLanguages;
 use PayU\Api\PayUKeyMapName;
@@ -12,7 +12,6 @@ use PayU\Api\PayuPaymentMethodType;
 use PayU\Api\PaymentMethods;
 use PayU\Api\PayUCountries;
 use PayU\Exceptions\PayUErrorCodes;
-use PayU\Exceptions\PayUException;
 use PayU\Exceptions\ConnectionException;
 use PayU\Api\PayUConfig;
 use PayU\Api\RequestMethod;
@@ -42,60 +41,32 @@ use PayU\PayUSubscriptionPlans;
 use PayU\PayUCreditCards;
 use PayU\PayURecurringBill;
 use PayU\PayURecurringBillItem;
+use PayU\PayU;
 
 
 /**
- *
- * Holds basic request information
  * 
+ * Payu exception throw when the api service report an error
  * @author PayU Latam
  * @since 1.0.0
- * @version 1.0.0, 20/10/2013
- *
+ * @version 1.0
+ * 
  */
-abstract class PayU {
+class PayUException extends Exception{
 	
-	/**
-	 * Api version
-	 */
-	const  API_VERSION = "4.0.1";
-
-	/**
-	 * Api name
-	 */
-	const  API_NAME = "PayU SDK";
+	public $payUCode;
 	
 	
-	const API_CODE_NAME = "PAYU_SDK";
-
 	/**
-	 * The method invocation is for testing purposes
+	 * constructor method
+	 * @param string $payuCode a element of PayUErrorCodes
+	 * @param string $message the message for this exception
+	 * @param long $code the code for this exception
+	 * @param string $previous if exist a previous exception
 	 */
-	public static $isTest = false;
-
-	/**
-	 * The merchant API key
-	 */
-	public static  $apiKey = null;
-
-	/**
-	 * The merchant API Login
-	 */
-	public static  $apiLogin = null;
-
-	/**
-	 * The merchant Id
-	 */
-	public static  $merchantId = null;
-
-	/**
-	 * The request language
-	 */
-	public static $language = SupportedLanguages::ES;
+	function __construct($payuCode, $message, $code = NULL, $previous = NULL){
+		$this->payUCode = $payuCode;
+		parent::__construct($message,$code, $previous);
+	}
 	
-
 }
-
-
-/** validates Environment before begin any operation */
-Environment::validate();
