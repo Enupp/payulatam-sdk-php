@@ -1,0 +1,11 @@
+{
+    "name": "Enupp/payulatam-sdk-php",
+    "description": "SDK da URL: http://developers.payulatam.com/pt/sdk/",
+    "keywords": ["payu", "payulatam", "php", "sdk", "namespace", "laravel"],
+    "type": "library",
+    "autoload": {
+        "psr-0": {
+            "PayU": "lib/"
+        }
+    }
+}
